@@ -81,9 +81,9 @@ const ProductBox: React.FC<Props> = ({
     .map(({ src }) => ({ src: src.src }))
     .concat(
       product.images &&
-        product.images.filter(
-          ({ src }) => !images.find((image) => image.src.src === src)
-        )
+      product.images.filter(
+        ({ src }) => !images.find((image) => image.src.src === src)
+      )
     )
 
   return (
@@ -117,7 +117,7 @@ const ProductBox: React.FC<Props> = ({
             }}
           >
             <ImageCarousel
-              showZoom
+              // showZoom
               alt={title}
               width={1050}
               height={1050}
@@ -131,10 +131,10 @@ const ProductBox: React.FC<Props> = ({
                 allImages?.length > 0
                   ? allImages
                   : [
-                      {
-                        src: `https://via.placeholder.com/1050x1050`,
-                      },
-                    ]
+                    {
+                      src: `https://via.placeholder.com/1050x1050`,
+                    },
+                  ]
               }
             ></ImageCarousel>
           </div>

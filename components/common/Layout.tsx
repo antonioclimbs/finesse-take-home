@@ -92,13 +92,13 @@ const InnerLayout: React.FC<{
         open={
           displaySidebar ||
           (builder.editingModel || Builder.previewingModel) ===
-            'cart-upsell-sidebar'
+          'cart-upsell-sidebar'
         }
         onClose={closeSidebar}
       >
         <CartSidebarView />
       </Sidebar>
-      <NoSSR>
+      {/* <NoSSR>
         <FeatureBar
           title="This site uses cookies to improve your experience. By clicking, you agree to our Privacy Policy."
           hide={Builder.isEditing ? true : acceptedCookies}
@@ -106,7 +106,7 @@ const InnerLayout: React.FC<{
             <Button onClick={() => onAcceptCookies()}>Accept cookies</Button>
           }
         />
-      </NoSSR>
+      </NoSSR> */}
     </ThemeProvider>
   )
 }
