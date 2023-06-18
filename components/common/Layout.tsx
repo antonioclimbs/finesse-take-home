@@ -15,7 +15,6 @@ import shopifyConfig from '@config/shopify'
 import { builder, BuilderContent, Builder } from '@builder.io/react'
 import themesMap from '@config/theme'
 import seoConfig from '@config/seo.json'
-import NoSSR from './NoSSR'
 
 const FeatureBar = dynamic(() => import('@components/common/FeatureBar'), {
   ssr: false,
@@ -27,29 +26,47 @@ const Layout: React.FC<{ pageProps: any; children: React.ReactNode }> = ({
 }) => {
   const builderTheme = pageProps.theme
   return (
-    <CommerceProvider {...shopifyConfig}>
-      <BuilderContent isStatic content={builderTheme} modelName="theme">
-        {(data, loading) => {
-          if (loading && !builderTheme) {
-            return 'loading ...'
-          }
-          const siteSettings = data?.siteSettings
-          const colorOverrides = data?.colorOverrides
-          const siteSeoInfo = data?.siteInformation
-          return (
-            <ManagedUIContext key={data?.id} siteSettings={siteSettings}>
-              <Head seoInfo={siteSeoInfo || seoConfig} />
-              <InnerLayout
-                themeName={data?.theme || 'base'}
-                colorOverrides={colorOverrides}
-              >
-                {children}
-              </InnerLayout>
-            </ManagedUIContext>
-          )
-        }}
-      </BuilderContent>
-    </CommerceProvider>
+    <div
+      sx={{
+        margin: `0 auto`,
+        px: 20,
+        maxWidth: 1920,
+        minWidth: '60vw',
+        minHeight: 800,
+      }}
+    >
+      <Head seoInfo={seoConfig} />
+      <InnerLayout
+        themeName={'base'}
+      >
+        {children}
+      </InnerLayout>
+    </div>
+    // <CommerceProvider {...shopifyConfig}>
+    //   <BuilderContent isStatic content={builderTheme} modelName="theme">
+    //     {(data, loading) => {
+    //       if (loading && !builderTheme) {
+    //         return 'loading ...'
+    //       }
+    //       const siteSettings = data?.siteSettings
+    //       const colorOverrides = data?.colorOverrides
+    //       const siteSeoInfo = data?.siteInformation
+    //       return (
+    //         // <ThemeProvider theme={data?.theme}>
+    //         <ManagedUIContext key={data?.id} siteSettings={siteSettings}>
+    //           <Head seoInfo={siteSeoInfo || seoConfig} />
+    //           <InnerLayout
+    //             themeName={data?.theme || 'base'}
+    //             colorOverrides={colorOverrides}
+    //           >
+    //             {children}
+    //           </InnerLayout>
+    //         </ManagedUIContext>
+    //         // </ThemeProvider>
+    //       )
+    //     }}
+    //   </BuilderContent>
+    // </CommerceProvider>
   )
 }
 
@@ -65,25 +82,26 @@ const InnerLayout: React.FC<{
   }
 }> = ({ themeName, children, colorOverrides }) => {
   const theme = {
-    ...themesMap[themeName],
-    colors: {
-      ...themesMap[themeName].colors,
-      ...colorOverrides,
-    },
+    // ...themesMap[themeName],
+    // colors: {
+    //   ...themesMap[themeName].colors,
+    //   ...colorOverrides,
+    // },
   }
   const { displaySidebar, closeSidebar } = useUI()
   const { acceptedCookies, onAcceptCookies } = useAcceptCookies()
   return (
-    <ThemeProvider theme={theme}>
+    <div>
+      {/* <ThemeProvider theme={theme}> */}
       <Navbar />
       <div
-        sx={{
-          margin: `0 auto`,
-          px: 20,
-          maxWidth: 1920,
-          minWidth: '60vw',
-          minHeight: 800,
-        }}
+      // sx={{
+      //   margin: `0 auto`,
+      //   px: 20,
+      //   maxWidth: 1920,
+      //   minWidth: '60vw',
+      //   minHeight: 800,
+      // }}
       >
         <main>{children}</main>
       </div>
@@ -98,16 +116,8 @@ const InnerLayout: React.FC<{
       >
         <CartSidebarView />
       </Sidebar>
-      {/* <NoSSR>
-        <FeatureBar
-          title="This site uses cookies to improve your experience. By clicking, you agree to our Privacy Policy."
-          hide={Builder.isEditing ? true : acceptedCookies}
-          action={
-            <Button onClick={() => onAcceptCookies()}>Accept cookies</Button>
-          }
-        />
-      </NoSSR> */}
-    </ThemeProvider>
+      {/* </ThemeProvider> */}
+    </div>
   )
 }
 

@@ -8,11 +8,12 @@ import { useUI } from '@components/common/context'
 import Image from 'next/legacy/image'
 import Searchbar from './Searchbar'
 import Link from '@components/common/Link'
-import { Bag } from '@components/icons'
+import { CiMenuBurger } from 'react-icons/ci'
+import finesseLogo from '../../public/finesse-logo.png'
 
 const Navbar: FC = () => {
   const [announcement, setAnnouncement] = useState()
-  const { theme } = useThemeUI()
+  // const { theme } = useThemeUI()
   const { navigationLinks, logo, openSidebar } = useUI()
   const cart = useCart()
 
@@ -34,96 +35,60 @@ const Navbar: FC = () => {
 
   return (
     <React.Fragment>
-      <BuilderComponent
-        content={announcement}
-        data={{ theme }}
-        model="announcement-bar"
-      />
-      <Box
-        as="header"
+      <nav className="flex items-center justify-between p-4">
+      </nav>
+      <nav
         sx={{
-          margin: `0 auto`,
-          maxWidth: 1920,
-          py: 2,
-          px: 2,
+          //   margin: `0 auto`,
+          //   maxWidth: 1920,
+          //   py: 2,
+          //   px: 2,
           display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          position: 'relative',
+          //   justifyContent: 'space-between',
+          //   alignItems: 'center',
+          //   position: 'relative',
         }}
       >
-        <Box
-          sx={{
-            display: ['none', 'none', 'flex'],
-            flexBasis: 0,
-            minWidth: 240,
-            justifyContent: 'space-evenly',
-          }}
+        <div
+        // sx={{
+        //   transform: 'translateX(-50%)',
+        //   left: '0%',
+        //   position: 'absolute',
+        // }}
         >
-          {navigationLinks?.map((link, index) => (
-            <Link key={index} sx={{ padding: 10 }} href={link.link || '//'}>
-              {link.title}
-            </Link>
-          ))}
-        </Box>
-        <Box
-          sx={{
-            transform: 'translateX(-50%)',
-            left: '50%',
-            position: 'absolute',
-          }}
-        >
-          <Heading
-            sx={{
-              fontSize: 20,
-              fontWeight: 'bold',
-            }}
+          <Link
+            href="/"
+          // sx={{
+          //   letterSpacing: -1,
+          //   textDecoration: `none`,
+          //   paddingLeft: '5px',
+          // }}
           >
-            {logo && logo.image && (
-              <Link
-                href="/"
-                sx={{
-                  letterSpacing: -1,
-                  textDecoration: `none`,
-                  paddingLeft: '5px',
-                }}
-              >
-                <Image
-                  alt="Logo"
-                  width={logo.width}
-                  height={logo.height}
-                  src={logo.image}
-                ></Image>
-              </Link>
-            )}
-            {logo && logo.text && !logo.image && (
-              <Link
-                href="/"
-                sx={{
-                  letterSpacing: -1,
-                  textDecoration: `none`,
-                  paddingLeft: '5px',
-                }}
-              >
-                {logo.text}
-              </Link>
-            )}
-          </Heading>
-        </Box>
-        <Box
+            <Image
+              alt="Logo"
+              width={120}
+              height={50}
+              src={finesseLogo}
+            ></Image>
+          </Link>
+        </div>
+        <div
           sx={{
             display: 'flex',
             minWidth: 140,
             width: '100%',
-            justifyContent: ['space-between', 'flex-end'],
+            justifyContent: 'flex-end',
           }}
         >
           <Searchbar />
           <Button onClick={openSidebar} aria-label="Cart">
-            <Bag />
+            <CiMenuBurger />
           </Button>
-        </Box>
-      </Box>
+          <Button onClick={openSidebar} aria-label="Cart">
+            CART
+          </Button>
+        </div>
+      </nav>
     </React.Fragment>
   )
 }
